@@ -1,0 +1,27 @@
+//============================================================================
+// Name        : Fibonacci.cpp
+// Author      : 
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+
+int fib(int n)
+{
+	if(n<=1)
+		return n;
+	else if(n>1)
+		return fib(n-1)+fib(n-2);
+}
+int main() {
+	int n;
+	cout << "Input a num: ";
+	cin >> n;
+	cout << fib(n) << endl;
+	system("pause");
+	return 0;
+}
