@@ -1,0 +1,59 @@
+//============================================================================
+// Name        : 2_2_4.cpp
+// Author      : 
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+//从有序表中删除其值在给定值s和t之间(s<t)的所有元素, 如果s,t不合理或者顺序表为空, 显示出错信息并退出运行
+#include <iostream>
+using namespace std;
+#define InitSize 50
+
+typedef struct{
+	int* data;
+	int length, maxsize;
+}Sqlist;
+
+void Init(Sqlist& L)
+{
+	L.data = new int[InitSize];
+	L.length = 7;
+	cout << "Input the sqlist: ";
+	for(int i = 0; i < L.length; i++)
+	cin >> L.data[i];
+}
+
+bool Del_s_t(Sqlist& L, int s, int t)
+{
+	if (L.length <= 0 || s > t)
+	{
+		cout << "error";
+		return false;
+	}
+
+	int k = 0;
+	for (int i = 0; i < L.length; i++)
+	{
+		if (L.data[i] < s || L.data[i] > t)
+		{
+			L.data[k] = L.data[i];
+			k++;
+		}
+	}
+	L.length = k;
+	return true;
+}
+
+int main() {
+
+	Sqlist L;
+	Init(L);
+	int s,t;
+	cout << "input s and t: ";
+	cin >> s >> t;
+	Del_s_t(L,s,t);
+	for (int i = 0; i < L.length; i++)
+		cout << L.data[i] << "  ";
+	return 0;
+}
