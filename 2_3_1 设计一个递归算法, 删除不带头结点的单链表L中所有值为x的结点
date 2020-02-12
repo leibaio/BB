@@ -1,0 +1,70 @@
+//============================================================================
+// Name        : 2_3_1 设计一个递归算法, 删除不带头结点的单链表L中所有值为x的结点
+// Author      : 
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+
+#include <iostream>
+using namespace std;
+
+typedef struct LNode{
+	int data;
+	struct LNode* next;
+}LNode, *LinkList;
+
+LinkList tailInsert(LinkList& L)
+{
+	int x;
+	L = (LinkList)malloc(sizeof(LNode));
+	LNode *s, *r = L;
+	cin >> x;
+	while (x != 9999)
+	{
+		s = (LinkList)malloc(sizeof(LNode));
+		s->data = x;
+		r->next = s;
+		r = s;
+		cin >> x;
+	}
+	r->next = NULL;
+	return L;
+}
+
+void del_x(LinkList& L, int x)
+{
+	LNode* p;
+	if (L == NULL)
+		return;
+	if (L->data == x)
+	{
+		p = L;
+		L = L->next;
+		free(p);
+		del_x(L,x);
+	}
+	else
+		del_x(L->next,x);
+}
+
+int main()
+{
+	LinkList L;
+	tailInsert(L);
+	int x;
+	cout << "input the data you want to delete: ";
+	cin >> x;
+	del_x(L,x);
+	LNode *p = L ->next;
+	while(p != NULL)
+	{
+		cout << p->data << " ";
+		p = p->next;
+	}
+	return 0;
+}
+
+
+
+
