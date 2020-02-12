@@ -1,0 +1,135 @@
+//============================================================================
+// Name        : 单链表的定义,创建,按序号查找,按值查找,插入,删除,求表长
+// Author      : 
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+
+#include <iostream>
+using namespace std;
+
+typedef struct LNode {
+	int data;
+	struct LNode* next;
+}LNode, *LinkList;
+
+LinkList headInsert(LinkList& L)
+{
+	int x; LNode* s;
+	L = (LinkList)malloc(sizeof(LNode));
+	L->next = NULL;
+	cin >> x;
+	while (x != 9999)
+	{
+		s = (LNode*)malloc(sizeof(LNode));
+		s->data = x;
+		s->next = L->next;
+		L->next = s;
+		cin >> x;
+	}
+	return L;
+}
+
+LinkList tailInsert(LinkList& L)
+{
+	int x;
+	L = (LinkList)malloc(sizeof(LNode));
+	LNode* s, *r = L;
+	cin >> x;
+	while (x != 9999)
+	{
+		s = (LNode*)malloc(sizeof(LNode));
+		s->data = x;
+		r->next = s;
+		r = s;
+		cin >> x;
+	}
+	r->next = NULL;
+	return L;
+}
+
+LNode *GetElem(LinkList& L, int i)
+{
+	LNode *p = L->next;
+	int j = 1;
+	if (i == 0)
+		return L;
+	if (i < 0)
+		return NULL;
+	while(p && j<i)
+	{
+		p = p->next;
+		j++;
+	}
+	return p;
+}
+
+LNode *LocatedElem(LinkList& L, int x)
+{
+	LNode* p = L->next;
+	while (p)
+	{
+		if (p->data == x)
+			return p;
+	}
+	return NULL;
+}
+
+LinkList H_Insert_x(LinkList& L, int i)
+{
+	int x;
+	LNode*s, *p;
+	p = GetElem(L,i-1);
+	s = (LNode*)malloc(sizeof(LNode));
+	cin >> x;
+	s->data = x;
+	s->next = p->next;
+	p->next = s;
+	return L;
+}
+
+int main()
+{
+	LinkList L;
+	tailInsert(L);
+	H_Insert_x(L,2);
+	LNode* p = L->next;
+	while (p)
+	{
+		cout << p->data << " ";
+		p = p->next;
+	}
+	return 0;
+}
+
+LinkList Delete(LinkList& L, int i)
+{
+	int x;
+	LNode *p, *q;
+	p = GetElem(L, i-1);
+	q = p->next;
+	x = q->data;
+	p->next = q->next;
+	free(q);
+	return L;
+}
+
+int count(LinkList& L)
+{
+	if (L->next == NULL)
+		return 0;
+	int count = 1;
+	LNode *p = L->next;
+	while (p->next)
+	{
+		p = p->next;
+		count++;
+	}
+	return count;
+}
+
+
+
+
+
