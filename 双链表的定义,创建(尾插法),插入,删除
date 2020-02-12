@@ -1,0 +1,88 @@
+//============================================================================
+// Name        : 双链表的定义,创建(尾插法),插入,删除
+// Author      : 
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+
+#include <iostream>
+using namespace std;
+
+typedef struct DNode{
+	int data;
+	struct DNode* prior, *next;
+}DNode, *DLinkList;
+
+DLinkList DheadInsert(DLinkList& L)
+{
+	int x;
+	L = (DLinkList)malloc(sizeof(DNode));
+	L->data = NULL;
+	DNode *s, *p = L;
+	cin >> x;
+	while (x != 9999)
+	{
+		s = (DNode*)malloc(sizeof(DNode));
+		s->data = x;
+		p->next = s;
+		s->prior = p;
+		p = p->next;
+		cin >> x;
+	}
+	p->next = NULL;
+	return L;
+}
+
+//插入操作顺序,先搞定s的前驱和后继,在搞定后结点的前驱,最后解决前结点的后驱
+DLinkList DInsert(DLinkList& L, int i, int x)
+{
+	int j = 1;
+	DNode* p = L->next,*s;
+	while(p && i<j-1)
+	{
+		p = p->next;
+		j++;
+	}
+	s = (DNode*)malloc(sizeof(DNode));
+	s->data = x;
+	s->prior = p;
+	s->next = p->next;
+	p->next->prior = s;
+	p->next = s;
+	return L;
+}
+
+DLinkList Ddelete(DLinkList& L, int i)
+{
+	int j = 1,x;
+	DNode* p = L->next,*q;
+	while (p && i < j - 1)
+	{
+		p = p->next;
+		j++;
+	}
+	q = p->next;
+	x = q->data;
+	p->next = q->next;
+	p->next->prior = p;
+	free(q);
+	return L;
+}
+
+int main(){
+	DLinkList L;
+	DheadInsert(L);
+	int i,x;
+	cout << "input the i and x: ";
+	cin >> i >> x;
+	DInsert(L,i,x);
+	DNode* p = L->next;
+	while (p)
+	{
+		cout << p->data << " ";
+		p = p->next;
+	}
+}
+
+
